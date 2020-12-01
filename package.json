@@ -1,0 +1,30 @@
+{
+  "name": "galerie_images_nosql",
+  "version": "1.0.0",
+  "description": "Galerie de visualisation d'images",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schneiderpierre6895/galerie_image_nosql.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "MongoDB",
+    "Express"
+  ],
+  "author": "Pierre SCHNEIDER",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schneiderpierre6895/galerie_image_nosql/issues"
+  },
+  "homepage": "https://github.com/schneiderpierre6895/galerie_image_nosql#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "http": "0.0.1-security"
+  }
+}
