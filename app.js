@@ -99,6 +99,14 @@ app.post('inscription/inscription', function (request, response, next) {
   next();
 });
 
+// Déconnexion de l'application
+app.get('/deconnexion', function (request, response, next) {
+  // La session n'est plus active, destruction de la session et redirection vers la page d'accueil
+  request.session.log = false;
+  response.redirect('/');
+  next();
+});
+
 // Page d'ajout d'une image
 app.get('/ajouteImage', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
@@ -106,14 +114,6 @@ app.get('/ajouteImage', function (request, response, next) {
 
   response.send(generationPages.pageAjouteImage());
   response.end();
-  next();
-});
-
-// Déconnexion de l'application
-app.get('/deconnexion', function (request, response, next) {
-  // La session n'est plus active, destruction de la session et redirection vers la page d'accueil
-  request.session.log = false;
-  response.redirect('/');
   next();
 });
 
@@ -127,5 +127,62 @@ app.post('/ajouteImage/form', function (request, response, next) {
   // Enregistrement de l'image dans la base de données
   bdd.creationImage(db, titre, request.session.pseudo);
   response.redirect('/ajouteImage');
+  next();
+});
+
+// Page de visionnage d'une image
+app.get('/visionnageImage', function (request, response, next) {
+  // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
+  verificationConnexion(request, response);
+
+  response.send(generationPages.pageVisionnageImageForm());
+  response.end();
+  next();
+});
+
+// Gestion de visionnage d'une image avec le lien direct
+app.post('/visionnageImage/form', function (request, response, next) {
+  response.send(generationPages.pageVisionnageImage(request.body.titre));
+  response.end();
+  next();
+});
+
+// Page de visionnage de toutes les images de l'utilisateur
+app.get('/listeImages', function (request, response, next) {
+  // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
+  verificationConnexion(request, response);
+
+  // Recherche des titres de toutes les images
+  let titres = new Array();
+  documents = bdd.chercheImagesParProprietaire(db, request.session.pseudo);
+
+  for (d in documants) {
+    titres.push(d.titre);
+  }
+
+  // Affichage de la page
+  response.send(generationPages.pageListeImages);
+  response.end();
+  next();
+});
+
+// Page de classage d'une image dans un album
+app.get('/classeImages', function (request, response, next) {
+  // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
+  verificationConnexion(request, response);
+
+  response.send(generationPages.pageClasseImageForm());
+  response.end();
+  next();
+});
+
+// Gestion de classage d'une image dans un album
+app.post('/classeImages/form', function (request, response, next) {
+  let titre = request.body.titre;
+  let album = request.body.album;
+
+  // Mise à jour de l'album auquel appartient l'image et redirection vers la page d'accueil
+  bdd.ajouteImageDansAlbum(db, request.session.pseudo, image, album);
+  response.redirect('/');
   next();
 });

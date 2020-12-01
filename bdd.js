@@ -45,26 +45,26 @@ function creationImage (db, titre, proprietaire) {
 }
 
 /**
-  @fn chercheImageParProprietaire
+  @fn chercheImagesParProprietaire
   @brief Méthode recherchant toutes les images d'un Utilisateur
   @param db - Base de données de travail
   @param proprietaire - Propriétaire des images à chercher
   @return Un vecteur de documents concernant toutes les images
 */
-function chercheImageParProprietaire (db, proprietaire) {
+function chercheImagesParProprietaire (db, proprietaire) {
   let collection = db.collection('Images');
   return collection.find({proprietaire: proprietaire});
 }
 
 /**
-  @fn chercheImageParAlbum
+  @fn chercheImagesParAlbum
   @brief Méthode recherchant toutes les images d'un album d'un utilisateur
   @param db - Base de données de travail
   @param proprietaire - Propriétaire de l'album à chercher
   @param album
   @return Toutes les images de l'album
 */
-function chercheImageParAlbum (db, proprietaire, album) {
+function chercheImageParsAlbum (db, proprietaire, album) {
   let collection = db.collection('Images');
   return collection.find({proprietaire: proprietaire, album: album});
 }
@@ -85,7 +85,7 @@ exports = module.exports = {
   creationUtilisateur: creationUtilisateur,
   chercheUtilisateur: chercheUtilisateur,
   creationImage: creationImage,
-  chercheImageParProprietaire: chercheImageParProprietaire,
-  chercheImageParAlbum: chercheImageParAlbum,
+  chercheImagesParProprietaire: chercheImagesParProprietaire,
+  chercheImagesParAlbum: chercheImagesParAlbum,
   ajouteImageDansAlbum: ajouteImageDansAlbum
 }
