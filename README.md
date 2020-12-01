@@ -22,7 +22,7 @@ node server.js
 
 # Lancement de l'application
 
-Lancer l'application en exécutant votre navigateur préféré à l'adresse
+Lancer l'application avec votre navigateur préféré à l'adresse
 
 ```
 http://localhost:3000
