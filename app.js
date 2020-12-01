@@ -161,7 +161,7 @@ app.get('/listeImages', function (request, response, next) {
   }
 
   // Affichage de la page
-  response.send(generationPages.pageListeImages);
+  response.send(generationPages.pageListeImages(titres));
   response.end();
   next();
 });
@@ -184,5 +184,31 @@ app.post('/classeImages/form', function (request, response, next) {
   // Mise à jour de l'album auquel appartient l'image et redirection vers la page d'accueil
   bdd.ajouteImageDansAlbum(db, request.session.pseudo, image, album);
   response.redirect('/');
+  next();
+});
+
+// Page de visionnage de toutes les images d'un album
+app.get('voirAlbum', function (request, response, next) {
+  // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
+  verificationConnexion(request, response);
+
+  response.send(generationPages.pageParcourirAlbumForm());
+  response.end();
+  next();
+});
+
+// Gestion du visionnage d'un album
+app.post('voirAlbum/form', function (request, response, next) {
+  // Recherche des titres de toutes les images
+  let titres = new Array();
+  documents = bdd.chercheImageParAlbum(db, request.session.pseudo, request.body.album);
+
+  for (d in documants) {
+    titres.push(d.titre);
+  }
+
+  // Affichage de la page
+  response.send(generationPages.pageListeAlbum(titres));
+  response.end();
   next();
 });

@@ -173,6 +173,21 @@ function formulaireClasseImage () {
 }
 
 /**
+  @fn formulaireParcourirAlbum
+  @brief Fonction générant un formulaire de parcours des images d'un album
+  @return La chaine de caractères générée
+*/
+function formulaireParcourirAlbum () {
+  let code = let code = '<form class="voirAlbum" action="voirAlbum/form" method="post"><p>' + ligne();
+  code += '<label for="album">Titre de l\'album : </label>' + ligne();
+  code += '<input type="text" name="album" id="album" value=""><br>' + ligne();
+  code += '<input type="submit" name="valider" value="Valider"><br>' + ligne();
+  code += '</p></form>' + ligne();
+
+  return code;
+}
+
+/**
   @fn pageLogin
   @brief Fonction générant la page de login
   @return La chaine de caractères générée
@@ -289,7 +304,7 @@ function pageListeImages (titres) {
     code += '<p>' + ligne();
     code += '<img src="/files/images/titre" alt="' + i + '"><br>' + ligne();
     code += '<a href="/files/images/titre">' + i + '</a>' + ligne();
-    code += '</p>' + ligne();
+    code += '</p><br>' + ligne();
   }
 
   code += finPage();
@@ -311,6 +326,48 @@ function pageClasseImageForm () {
   code += finPage();
 }
 
+/**
+  @fn pageParcourirAlbumForm
+  @brief Fonction générant le formulaire de visionnage d'albums
+  @return La chaine de caractères générée
+*/
+function pageParcourirAlbumForm () {
+  let code = debutPage('Galerie d\'images');
+  code += titre();
+  code += menu();
+  code += titrePage('Visionnage d\'un album');
+  code += formulaireParcourirAlbum();
+  code += finPage();
+
+  return code;
+}
+
+/**
+  @fn pageListeAlbum
+  @brief Fonction générant la page de visionnage de toutes les images
+  @param titres - Array de tous les titres des images à afficher
+  @return La chaine de caractères générée
+*/
+function pageListeAlbum (titres) {
+  let code = debutPage('Galerie d\'images');
+  code += titre();
+  code += menu();
+  code += titrePage('Visionnage de toutes les images de l\'album');
+
+  for (let i in titres) {
+    code += '<p>' + ligne();
+    code += '<img src="/files/images/titre" alt="' + i + '"><br>' + ligne();
+    code += '<a href="/files/images/titre">' + i + '</a>' + ligne();
+    code += '</p><br>' + ligne();
+  }
+
+  code += finPage();
+
+  return code;
+}
+
+
+
 exports = module.exports = {
   pageLogin: pageLogin,
   pageInscription: pageInscription,
@@ -318,5 +375,7 @@ exports = module.exports = {
   pageVisionnageImageForm: pageVisionnageImageForm,
   pageVisionnageImage: pageVisionnageImage,
   pageListeImages: pageListeImages,
-  pageClasseImageForm: pageClasseImageForm
+  pageClasseImageForm: pageClasseImageForm,
+  pageParcourirAlbumForm: pageParcourirAlbumForm,
+  pageListeAlbum: pageListeAlbum
 }
