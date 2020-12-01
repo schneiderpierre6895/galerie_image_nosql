@@ -109,6 +109,14 @@ app.get('/ajouteImage', function (request, response, next) {
   next();
 });
 
+// Déconnexion de l'application
+app.get('/deconnexion', function (request, response, next) {
+  // La session n'est plus active, destruction de la session et redirection vers la page d'accueil
+  request.session.log = false;
+  response.redirect('/');
+  next();
+});
+
 // Gestion d'ajout d'une image
 app.post('/ajouteImage/form', function (request, response, next) {
   // Sauvegarde du fichier sur le serveur

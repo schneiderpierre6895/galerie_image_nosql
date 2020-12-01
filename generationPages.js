@@ -181,7 +181,8 @@ function pageBienvenue (pseudo) {
   let code = debutPage('Galerie d\'images');
   code += titre();
   code += menu();
-  code += '<p class="bienvenue">Bienvenue ' + pseudo + '</p>' + ligne();
+  code += '<p class="bienvenue">Bienvenue ' + pseudo + '</p><br>' + ligne();
+  code += '<p><a href="/deconnexion">Déconnexion du site</a></p>' + ligne();
   code += finPage();
 
   return code;
