@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   @file generationPages.js
   @brief Module générant du code HTML au format texte
@@ -146,7 +148,7 @@ function formulaireAjouteImage () {
   @return La chaine de caractères générée
 */
 function formulaireVisionnageImage () {
-  let code = let code = '<form class="visionnageImage" action="visionnageImage/form" method="post"><p>' + ligne();
+  let code = '<form class="visionnageImage" action="visionnageImage/form" method="post"><p>' + ligne();
   code += '<label for="titre">Titre avec extension : </label>' + ligne();
   code += '<input type="text" name="titre" id="titre" value=""><br>' + ligne();
   code += '<input type="submit" name="valider" value="Valider"><br>' + ligne();
@@ -161,10 +163,10 @@ function formulaireVisionnageImage () {
   @return La chaine de caractères générée
 */
 function formulaireClasseImage () {
-  let code = let code = '<form class="classeImage" action="classeImage/form" method="post"><p>' + ligne();
+  let code = '<form class="classeImage" action="classeImage/form" method="post"><p>' + ligne();
   code += '<label for="titre">Titre avec extension : </label>' + ligne();
   code += '<input type="text" name="titre" id="titre" value=""><br>' + ligne();
-  code += '<label for="album">Nom de l\'album' : </label>' + ligne();
+  code += '<label for="album">Nom de l\'album : </label>' + ligne();
   code += '<input type="text" name="album" id="album" value=""><br>' + ligne();
   code += '<input type="submit" name="valider" value="Valider"><br>' + ligne();
   code += '</p></form>' + ligne();
@@ -178,7 +180,7 @@ function formulaireClasseImage () {
   @return La chaine de caractères générée
 */
 function formulaireParcourirAlbum () {
-  let code = let code = '<form class="voirAlbum" action="voirAlbum/form" method="post"><p>' + ligne();
+  let code = '<form class="voirAlbum" action="voirAlbum/form" method="post"><p>' + ligne();
   code += '<label for="album">Titre de l\'album : </label>' + ligne();
   code += '<input type="text" name="album" id="album" value=""><br>' + ligne();
   code += '<input type="submit" name="valider" value="Valider"><br>' + ligne();

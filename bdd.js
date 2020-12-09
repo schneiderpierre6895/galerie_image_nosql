@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   @file bdd.js
   @brief Implémentation du module d'accès à la base de données de l'application
@@ -64,7 +66,7 @@ function chercheImagesParProprietaire (db, proprietaire) {
   @param album
   @return Toutes les images de l'album
 */
-function chercheImageParAlbum (db, proprietaire, album) {
+function chercheImagesParAlbum (db, proprietaire, album) {
   let collection = db.collection('Images');
   return collection.find({proprietaire: proprietaire, album: album});
 }

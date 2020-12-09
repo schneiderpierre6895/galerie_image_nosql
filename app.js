@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   @file app.js
   @brief Implémentation de l'application avec ExpressJS
@@ -13,7 +15,7 @@ let generationPages = require('./generationPages');
 
 let MongoClient = require('mongodb').MongoClient;
 let url = 'mongodb://localhost:27017';
-let client = new MongoClient(url);
+let client = new MongoClient(url, {useNewUrlParser: true});
 client.connect(function (error) {
   if (error) {
     console.error('Ouverture impossible de MongoDB');

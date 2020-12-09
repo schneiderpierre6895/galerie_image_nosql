@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   @file server.js
   @brief Implémentation du serveur NodeJS
