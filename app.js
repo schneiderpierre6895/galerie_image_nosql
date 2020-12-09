@@ -204,4 +204,4 @@ app.post('voirAlbum/form', function (request, response, next) {
 });
 
 // Paramétrage du port du serveur
-app.set('port', process.env.PORT || 3000);
+app.listen(3000);
