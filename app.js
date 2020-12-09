@@ -6,26 +6,14 @@
   @author Pierre SCHNEIDER
 */
 
-let fs = require('fs');
-let express = require('express');
-let bodyParser = require('body-parser');
-let session = require('express-session');
-let bdd = require('./bdd.js');
-let generationPages = require('./generationPages');
+const fs = require('fs');
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const bdd = require('./bdd.js');
+const generationPages = require('./generationPages');
 
-let MongoClient = require('mongodb').MongoClient;
-let url = 'mongodb://localhost:27017';
-let client = new MongoClient(url, {useNewUrlParser: true});
-client.connect(function (error) {
-  if (error) {
-    console.error('Ouverture impossible de MongoDB');
-    console.error('Erreur : ' + error);
-  }
-});
-let db = client.db('galerie');
-
-
-let app = express();
+const app = express();
 app.use('/files', express.static(__dirname + '/files'));
 app.use(bodyParser());
 // Création d'une session de 30 minutes
@@ -214,3 +202,6 @@ app.post('voirAlbum/form', function (request, response, next) {
   response.end();
   next();
 });
+
+// Paramétrage du port du serveur
+app.set('port', process.env.PORT || 3000);

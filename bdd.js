@@ -6,6 +6,8 @@
   @author Pierre SCHNEIDER
 */
 
+let MongoClient = require('mongodb').MongoClient;
+
 /**
   @fn creationUtilisateur
   @brief Fonction de création d'un utilisateur dans la base de données
@@ -83,11 +85,25 @@ function ajouteImageDansAlbum (db, proprietaire, image, album) {
   collection.update({titre: image, proprietaire: proprietaire}, {album: album});
 }
 
-exports = module.exports = {
-  creationUtilisateur: creationUtilisateur,
-  chercheUtilisateur: chercheUtilisateur,
-  creationImage: creationImage,
-  chercheImagesParProprietaire: chercheImagesParProprietaire,
-  chercheImagesParAlbum: chercheImagesParAlbum,
-  ajouteImageDansAlbum: ajouteImageDansAlbum
+exports = module.exports = function (callback) {
+  let url = 'mongodb://localhost:27017';
+  const client = new MongoClient(url, { useUnifiedTopology: true});
+
+  client.connect(function (error) {
+    if (error) {
+      console.error('Erreur de connexion à MongoDB');
+      process.exit(1);
+    }
+
+    let db = client.db('galerie');
+
+    callback({
+      creationUtilisateur: creationUtilisateur(db, nom, prenom, pseudo, email, passwd),
+      chercheUtilisateur: chercheUtilisateur(db, pseudo),
+      creationImage: creationImage(db, titre, proprietaire),
+      chercheImagesParProprietaire: chercheImagesParProprietaire(db, proprietaire),
+      chercheImagesParAlbum: chercheImagesParAlbum(db, proprietaire, album),
+      ajouteImageDansAlbum: ajouteImageDansAlbum(db, proprietaire, image, album)
+    });
+  });
 }
