@@ -17,7 +17,7 @@ mongod
 Lancer le serveur NodeJS avec la commande
 
 ```
-node server.js
+node app.js
 ```
 
 # Lancement de l'application
