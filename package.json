@@ -27,6 +27,7 @@
     "express-session": "^1.17.1",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
-    "mongodb": "^3.6.3"
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.5"
   }
 }

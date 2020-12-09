@@ -10,6 +10,7 @@ const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const http = require('http');
 const bdd = require('./bdd.js');
 const generationPages = require('./generationPages');
 
@@ -58,7 +59,7 @@ app.get('/', function (request, response, next) {
 
 // Gestion du login
 app.post('/login', function (request, response, next) {
-  let documentLog = bdd.chercheUtilisateur(db, request.body.pseudo);
+  let documentLog = bdd.chercheUtilisateur(bdd.db, request.body.pseudo);
   if (request.body.pseudo == documentLog.passwd) {
     request.session.log = true;
     request.session.pseudo = documentLog.pseudo;
@@ -77,11 +78,13 @@ app.get('/inscription', function (request, response, next) {
 
 // Gestion de l'inscription
 app.post('inscription/inscription', function (request, response, next) {
+  console.log('Debug : Arrivée page inscription');
   let nom = request.body.nom;
   let prenom = request.body.prenom;
   let pseudo = request.body.pseudo;
   let email = request.body.email;
   let passwd = request.body.passwd;
+  console.log(nom + ' ' + prenom + ' ' + pseudo + ' ' + email + ' ' + passwd);
 
   // Création de l'utilisateur dans la base de données et redirection vers la page de connexion au site
   bdd.creationUtilisateur(db, nom, prenom, pseudo, email, passwd);
@@ -100,7 +103,7 @@ app.get('/deconnexion', function (request, response, next) {
 // Page d'ajout d'une image
 app.get('/ajouteImage', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
-  verificationConnexion(request, response);
+  //verificationConnexion(request, response);
 
   response.send(generationPages.pageAjouteImage());
   response.end();
@@ -123,7 +126,7 @@ app.post('/ajouteImage/form', function (request, response, next) {
 // Page de visionnage d'une image
 app.get('/visionnageImage', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
-  verificationConnexion(request, response);
+  //verificationConnexion(request, response);
 
   response.send(generationPages.pageVisionnageImageForm());
   response.end();
@@ -140,7 +143,7 @@ app.post('/visionnageImage/form', function (request, response, next) {
 // Page de visionnage de toutes les images de l'utilisateur
 app.get('/listeImages', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
-  verificationConnexion(request, response);
+  //verificationConnexion(request, response);
 
   // Recherche des titres de toutes les images
   let titres = new Array();
@@ -157,9 +160,9 @@ app.get('/listeImages', function (request, response, next) {
 });
 
 // Page de classage d'une image dans un album
-app.get('/classeImages', function (request, response, next) {
+app.get('/classeImage', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
-  verificationConnexion(request, response);
+  //verificationConnexion(request, response);
 
   response.send(generationPages.pageClasseImageForm());
   response.end();
@@ -167,7 +170,7 @@ app.get('/classeImages', function (request, response, next) {
 });
 
 // Gestion de classage d'une image dans un album
-app.post('/classeImages/form', function (request, response, next) {
+app.post('/classeImage/form', function (request, response, next) {
   let titre = request.body.titre;
   let album = request.body.album;
 
@@ -180,7 +183,7 @@ app.post('/classeImages/form', function (request, response, next) {
 // Page de visionnage de toutes les images d'un album
 app.get('voirAlbum', function (request, response, next) {
   // Si l'utilisateur n'est pas connecté, on le renvoi à la page de connexion
-  verificationConnexion(request, response);
+  //verificationConnexion(request, response);
 
   response.send(generationPages.pageParcourirAlbumForm());
   response.end();
@@ -193,7 +196,7 @@ app.post('voirAlbum/form', function (request, response, next) {
   let titres = new Array();
   documents = bdd.chercheImageParAlbum(db, request.session.pseudo, request.body.album);
 
-  for (d in documants) {
+  for (d in documents) {
     titres.push(d.titre);
   }
 
@@ -204,4 +207,6 @@ app.post('voirAlbum/form', function (request, response, next) {
 });
 
 // Paramétrage du port du serveur
-app.listen(3000);
+app.set('port', process.env.PORT || 3000);
+const server = http.createServer(app);
+server.listen(process.env.PORT || 3000);
